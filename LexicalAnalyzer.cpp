@@ -19,7 +19,13 @@ bool keywordCheck(char lexicalUnit[]){
 }
 
 bool separCheck(char lexicalUnit){
-  char separaters[] = '(',')',',','{','}','[',']',
+  char separators[8] = {'(',')',',','{','}','[',']','"'};
+  for(int i=0;i<8;i++){
+    if(separators[i]==lexicalUnit)
+      return true;
+  }
+  else
+    return false;
 
 bool idenCheck(char lexicalUnit[]){
   if(
