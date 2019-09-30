@@ -2,6 +2,7 @@
 #include<fstream>
 #include <iomanip>
 #include<string.h>
+#include <stdio.h>
 using namespace std;
 
 //Check if the lexicalUnit is a keyword, returns true or false
@@ -18,30 +19,36 @@ bool keywordCheck(char lexicalUnit[]){
   return false;
 }
 
-bool separCheck(char lexicalUnit){
-  //Comment
-  char separators[8] = {'(',')',',','{','}','[',']','"'};
-  for(int i=0;i<8;i++){
-    if(separators[i]==lexicalUnit)
-      return true;
-  }
-  else
-    return false;
+// bool separCheck(char lexicalUnit){
+//   //Comment
+//   char separators[8] = {'(',')',',','{','}','[',']','"'};
+//   for(int i=0;i<8;i++){
+//     if(separators[i]==lexicalUnit)
+//       return true;
+//   }
+//   else
+//     return false;
+//   }
 
-bool idenCheck(char lexicalUnit[]){
-  if(
-
-
+// bool idenCheck(char lexicalUnit[]){
+//   if(
+//
+//
 
 int main(){
 
 
   ifstream input("test.txt");
-  char data;
+  char curChar;
   //Go through the file char by char
   while(!input.eof()){
-    input>>data;
-    cout<<data<<endl;
+    input.get(curChar);
+    if(curChar=='('){
+      cout<<"bracket found";
+    }
+
+    // cout<<data<<endl;
+
   }
 
 ofstream output;
