@@ -83,7 +83,7 @@ int main(){
    				if(flag == 1)
    					cout << "Real\t\t" << lexicalUnit2 << endl;
    				else
-   					cout << "Integer\t" << lexicalUnit2 << endl;
+   					cout << "Integer\t\t" << lexicalUnit2 << endl;
 
    		}
 	}
