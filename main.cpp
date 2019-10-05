@@ -7,14 +7,14 @@
 using namespace std;
 
 int keywordCheck(char lexicalUnit[]){
-	char keywords[32][10] = {"auto","break","case","char","const","continue","default",
+	char keywords[36][10] = {"auto","break","case","char","const","continue","default",
 							"do","double","else","enum","extern","float","for","goto",
 							"if","int","long","register","return","short","signed",
 							"sizeof","static","struct","switch","typedef","union",
-							"unsigned","void","volatile","while"};
+							"unsigned","void","volatile","while","true","false","cin","cout"};
   int mark = 0;
 
-	for(int i = 0; i < 32; i++){
+	for(int i = 0; i < 36; i++){
 		if(strcmp(keywords[i], lexicalUnit) == 0){
 			mark = 1;
 			break;
@@ -24,7 +24,7 @@ int keywordCheck(char lexicalUnit[]){
 }
 
 int main(){
-	char curChar, lexicalUnit[20], lexicalUnit2[20], separators[] = ",;''[]{}()", operators[] = "-+*/<=>%";
+	char curChar, lexicalUnit[20], lexicalUnit2[20], separators[] = ",;''[]{}()", operators[] = "-+*/<=>%?";
 	ifstream input("test.txt");
 	int i,j = 0,k = 0, flag = 0;
 
@@ -46,7 +46,7 @@ int main(){
           cout << "Separator\t" << curChar << endl;
       }
 
-		for(i = 0; i < 8; i++){
+		for(i = 0; i < 9; i++){
    			if(curChar == operators[i])
    				cout << "Operator\t" << curChar << endl;
    		}
