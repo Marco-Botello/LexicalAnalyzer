@@ -28,7 +28,6 @@ int main(){
 	ifstream input("test.txt");
 	int i,j = 0,k = 0, flag = 0;
 
-  cout << "Output:" << endl;
   cout << "Token\t\t" << "Lexeme" << endl;
   cout << "------------------------------" << endl;
 
