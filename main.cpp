@@ -33,6 +33,7 @@ int main(){
 
 	if(!input.is_open()){
 		cout << "error while opening the file\n";
+
 		exit(0);
 	}
 
@@ -86,6 +87,7 @@ int main(){
 
    		}
 	}
+	system("PAUSE");
 	input.close();
 	return 0;
 }
