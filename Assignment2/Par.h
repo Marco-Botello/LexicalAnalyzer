@@ -13,88 +13,91 @@ public:
 
 	//syntax rule functions after removing left recursive and backtracking
 
-	//<Rat19F> -> <Opt Function Definitions> %%  <Opt Declaration List> <Statement List>
+	//<Rat19F> := <Opt Function Definitions> %%  <Opt Declaration List> <Statement List>
 	void RAT19F(ifstream& infile, ofstream& outfile);
 
-	//<Opt Function Definitions> -> <Function Definitions> | <Empty>
+	//<Opt Function Definitions> := <Function Definitions> | <Empty>
 	void OptFunctionDefinition(ifstream& infile, ofstream& outfile);
 
-	//<Function Definitions> -> <Function>
+	//<Function Definitions>  :: = <Function> | <Function> <Function Definitions>
 	void FunctionDefinition(ifstream& infile, ofstream& outfile);
 
-	/*<Function> ->  @  <Identifier>  (<Opt Parameter List> )   
-	<Opt Declaration List>  <Body>*/
+	//<Function> ::= function  <Identifier>   ( <Opt Parameter List> )  <Opt Declaration List>  <Body>
 	void Function(ifstream& infile, ofstream& outfile);
 
-	//<Opt Parameter List> ->  <Parameter List>   |  <Empty>
+	//<Opt Parameter List> :: = <Parameter List> | <Empty>
 	void OptParameterList(ifstream& infile, ofstream& outfile);
 
-	//<Parameter List>  ->  <Parameter>
+	//<Parameter List>  ::=  <Parameter>    |     <Parameter> , <Parameter List>
 	void ParameterList(ifstream& infile, ofstream& outfile);
 
-	//<Parameter> ->  <IDs > : <Qualifier> 
+	//<Parameter> ::=  <IDs >  <Qualifier>  
 	void Parameter(ifstream& infile, ofstream& outfile);
 
-	//<Qualifier> -> integer   |  boolean  |  floating
+	//<Qualifier> ::= int     |    boolean    |  real 
 	void Qualifier(ifstream& infile, ofstream& outfile);
 
-	//<Body>  ->  {  < Statement List>  }
+	//<Body>  ::=  {  < Statement List>  }
 	void Body(ifstream& infile, ofstream& outfile);
 
-	//<Opt Declaration List> -> <Declaration List>   | <Empty>
+	//<Opt Declaration List> ::= <Declaration List>   |    <Empty>
 	void OptDeclarationList(ifstream& infile, ofstream& outfile);
 
-	//<Declaration List>  -> <Declaration> ;
+	//<Declaration List>  := <Declaration> ;     |      <Declaration> ; <Declaration List>
 	void DeclarationList(ifstream& infile, ofstream& outfile);
 
-	//<Declaration> ->  <Qualifier > <IDs>
+	// <Declaration> ::=   <Qualifier > <IDs>                   
 	void Declaration(ifstream& infile, ofstream& outfile);
 
-	//<IDs> ->  <Identifier>
+	//<IDs> ::=     <Identifier>    | <Identifier>, <IDs>
 	void IDs(ifstream& infile, ofstream& outfile);
 
-	//<Statement List> ->  <Statement>
+	//<Statement List> ::=   <Statement>   | <Statement> <Statement List>
 	void StatementList(ifstream& infile, ofstream& outfile);
 
-	/*<Statement> ->  <Compound> | <Assign> | <If> |  <Return> | 
-	<Write> | <Read> | <While>*/
+	//<Statement> ::=   <Compound>  |  <Assign>  |   <If>  |  <Return>   | <Print>   |   <Scan>   |  <While> 
 	void Statement(ifstream& infile, ofstream& outfile);
 
-	//<Compound> -> {  <Statement List>  }
+	//<Scan> ::=    get ( <IDs> );
+	void Scan(ifstream& infile, ofstream& outfile);
+
+	//<Compound> ::=   {  <Statement List>  } 
 	void Compound(ifstream& infile, ofstream& outfile);
 
-	//<Assign> -> <Identifier> : = <Expression>;
+	//<Assign> ::=     <Identifier> = <Expression> ;
 	void Assign(ifstream& infile, ofstream& outfile);
 
-	//<If> -> if  ( <Condition>  ) <Statement>
+	/*<If> ::=     if  ( <Condition>  ) <Statement>   fi   |   
+	if (<Condition>) <Statement>   otherwise  <Statement>  fi
+	*/
 	void If(ifstream& infile, ofstream& outfile);
-	
-	//<Return> ->  return
+
+	//<Return> ::=  return ; |  return <Expression> ;
 	void Return(ifstream& infile, ofstream& outfile);
 
-	//<While> -> while ( <Condition>  )  <Statement> 
+	//<While> ::=  while ( <Condition>  )  <Statement>   
 	void While(ifstream& infile, ofstream& outfile);
 
-	//<Condition> -> <Expression>  <Relop>   <Expression>
+	//<Condition> ::=     <Expression>  <Relop>   <Expression>
 	void Condition(ifstream& infile, ofstream& outfile);
 
-	//<Relop> ->   = |  /=  |   >   | <   |  =>   | <=
+	// <Relop> :: = ==   | /= | > | < | = >    |   <=
 	void Relop(ifstream& infile, ofstream& outfile);
 
-	//<Expression>  -> <Term>
+	//<Expression>  ::=    <Expression> + <Term>    | <Expression>  - <Term>    |    <Term>
 	void Expression(ifstream& infile, ofstream& outfile);
 
-	//<Term>    ->  <Factor>
+	//<Term>    ::=      <Term>  *  <Factor>     |   <Term>  /  <Factor>     |     <Factor>
 	void Term(ifstream& infile, ofstream& outfile);
 
-	//<Factor> -> - <Primary>   | <Primary>
+	//<Factor> ::=      -  <Primary>    |    <Primary>
 	void Factor(ifstream& infile, ofstream& outfile);
 
-	/*<Primary> -> <Identifier> | <Integer> | ( <Expression> ) |
-	<Real>  | true | false*/
+	/*<Primary> ::=     <Identifier>  |  <Integer>  |   <Identifier>  ( <IDs> )   |   ( <Expression> )   |  
+                                     <Real>  |   true   |  false                       */
 	void Primary(ifstream& infile, ofstream& outfile);
 
-	//<Empty> -> epsilon
+	//<Empty>   ::= epsilon
 	void Empty(ifstream& infile, ofstream& outfile);
 
 	//Helper functions
@@ -102,8 +105,7 @@ public:
 	void ParserOnOff(const bool number);
 	void print(ofstream& outfile);
 
-	//Destructor
-//	~Par();
+
 
 private:
 	bool _switch;
