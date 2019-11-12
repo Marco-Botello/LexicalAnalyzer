@@ -1058,7 +1058,14 @@ void Par::Empty(ifstream& infile, ofstream& outfile)
 	//Do nothing in this function
 }
 
-
+void Par::printError(ofstream& outfile)
+{
+	outfile << "Error at line " << lineNum << endl;
+	cerr << "Error at line " << lineNum << endl;
+	//Reset the line number if there is an syntax error. The program will terminate
+	//right away. So it is necessary to reset this for the next run.
+	lineNum = 1;
+}
 
 //Destructor
 //Par::~Par() {}

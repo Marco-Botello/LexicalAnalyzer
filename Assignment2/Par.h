@@ -24,9 +24,6 @@ public:
 	//<Function Definitions> -> <Function> < Function Definitions Prime>
 	void FunctionDefinition(ifstream& infile, ofstream& outfile);
 
-	//<Function Definitions Prime>  -> <Function Definitions> | <Empty>  
-	void FunctionDefinitionPrime(ifstream& infile, ofstream& outfile);
-
 	/*<Function> ->  @  <Identifier>  (<Opt Parameter List> )   
 	<Opt Declaration List>  <Body>*/
 	void Function(ifstream& infile, ofstream& outfile);
@@ -36,9 +33,6 @@ public:
 
 	//<Parameter List>  ->  <Parameter> <Parameter List Prime>
 	void ParameterList(ifstream& infile, ofstream& outfile);
-
-	//<Parameter List Prime>  -> , <Parameter List> | <Empty>
-	void ParameterListPrime(ifstream& infile, ofstream& outfile);
 
 	//<Parameter> ->  <IDs > : <Qualifier> 
 	void Parameter(ifstream& infile, ofstream& outfile);
@@ -55,9 +49,6 @@ public:
 	//<Declaration List>  -> <Declaration> ;  <Declaration List Prime>
 	void DeclarationList(ifstream& infile, ofstream& outfile);
 
-	//<Declaration List Prime>  -> <Declaration List> | <Empty>
-	void DeclarationListPrime(ifstream& infile, ofstream& outfile);
-
 	//<Declaration> ->  <Qualifier > <IDs>
 	void Declaration(ifstream& infile, ofstream& outfile);
 
@@ -69,9 +60,6 @@ public:
 
 	//<Statement List> ->  <Statement> <Statement List Prime>
 	void StatementList(ifstream& infile, ofstream& outfile);
-
-	//<Statement List Prime> ->  <Statement List> | <Empty>
-	void StatementListPrime(ifstream& infile, ofstream& outfile);
 
 	/*<Statement> ->  <Compound> | <Assign> | <If> |  <Return> | 
 	<Write> | <Read> | <While>*/
@@ -85,21 +73,9 @@ public:
 
 	//<If> -> if  ( <Condition>  ) <Statement> <If Prime>
 	void If(ifstream& infile, ofstream& outfile);
-
-	//<If Prime> ->  fi | else <Statement> fi
-	void IfPrime(ifstream& infile, ofstream& outfile);
-
+	
 	//<Return> ->  return <Return Prime>
 	void Return(ifstream& infile, ofstream& outfile);
-
-	//<Return Prime> ->  ; |  <Expression> ;
-	void ReturnPrime(ifstream& infile, ofstream& outfile);
-
-	//<Write> ->   write ( <Expression>);
-	void Write(ifstream& infile, ofstream& outfile);
-
-	//<Read> -> read ( <IDs> );
-	void Read(ifstream& infile, ofstream& outfile);
 
 	//<While> -> while ( <Condition>  )  <Statement> 
 	void While(ifstream& infile, ofstream& outfile);
@@ -113,16 +89,8 @@ public:
 	//<Expression>  -> <Term> <Expression Prime>
 	void Expression(ifstream& infile, ofstream& outfile);
 
-	/*<Expression Prime>  -> + <Term> <Expression Prime>  |
-	- <Term> <Expression Prime> | <Empty>*/
-	void ExpressionPrime(ifstream& infile, ofstream& outfile);
-
 	//<Term>    ->  <Factor> <Term Prime>
 	void Term(ifstream& infile, ofstream& outfile);
-
-	/*<Term Prime> ->  * <Factor> <Term Prime> |  / <Factor> <Term Prime> |
-	<Empty>*/
-	void TermPrime(ifstream& infile, ofstream& outfile);
 
 	//<Factor> -> - <Primary>   | <Primary>
 	void Factor(ifstream& infile, ofstream& outfile);
@@ -130,9 +98,6 @@ public:
 	/*<Primary> -> <Identifier> <Primary Prime> | <Integer> | ( <Expression> ) |
 	<Real>  | true | false*/
 	void Primary(ifstream& infile, ofstream& outfile);
-
-	//<Primary Prime> -> [<IDs>] | <Empty>
-	void PrimaryPrime(ifstream& infile, ofstream& outfile);
 
 	//<Empty> -> epsilon
 	void Empty(ifstream& infile, ofstream& outfile);
