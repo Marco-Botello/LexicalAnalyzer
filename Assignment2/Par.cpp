@@ -13,39 +13,39 @@ void Par::ParserOnOff(const bool number)
 }
 
 //Print token and lexeme
-void Par::print(ofstream& outfile)
+void Par::print(ofstream& output)
 {
 	if (!flag)
 	{
 		Lexical::print();
-		outfile << "Token: " << left << setw(20) << this->token
+		output << "Token: " << left << setw(20) << this->token
 			<< "Lexeme: " << setw(20) << this->lexeme << endl;
 	}
 }
 
 //syntax rule functions
-void Par::RAT19F(ifstream& infile, ofstream& outfile)
+void Par::RAT19F(ifstream& infile, ofstream& output)
 {
 	//Get the first token in file.txt
 	Lexer(infile);
-	print(outfile);
+	print(output);
 	if (!flag)
 	{
 		cout << "\t<RAT19F> -> <Opt Function Definitions>"
 			<< " %% <Opt Declaration List> <Statement List>\n";
-		outfile << "\t<RAT19F> -> <Opt Function Definitions>"
+		output << "\t<RAT19F> -> <Opt Function Definitions>"
 			<< " %% <Opt Declaration List> <Statement List>\n";
 	}
-	OptFunctionDefinition(infile, outfile);
+	OptFunctionDefinition(infile, output);
 	if (lexeme == "%%")
 	{
 		Lexer(infile);
-		print(outfile);
-		OptDeclarationList(infile, outfile);
-		StatementList(infile, outfile);
+		print(output);
+		OptDeclarationList(infile, output);
+		StatementList(infile, output);
 		if (!(lexeme == "EOF"))
 		{
-			outfile << "This is not EOF marker.\n"
+			output << "This is not EOF marker.\n"
 				<< "Error at line " << line << endl
 				<< "Only <Opt Declaration List> <StatementList> is allowed after %%.\n";
 			cerr << "This is not EOF marker.\n"
@@ -60,8 +60,8 @@ void Par::RAT19F(ifstream& infile, ofstream& outfile)
 	}
 	else
 	{
-		printError(outfile);
-		outfile << "Invalid separator, '%%' is expected "
+		printError(output);
+		output << "Invalid separator, '%%' is expected "
 			<< " after function definitions and before declaration list.\n";
 		cerr << "Invalid separator, '%%' is expected "
 			<<" after function definitions and before declaration list.\n";
@@ -70,27 +70,27 @@ void Par::RAT19F(ifstream& infile, ofstream& outfile)
 	}
 }
 
-void Par::OptFunctionDefinition(ifstream& infile, ofstream& outfile)
+void Par::OptFunctionDefinition(ifstream& input, ofstream& output)
 {
 	if (lexeme == "@")
 	{
 		if (!flag)
 		{
-			outfile << "\t<Opt Function Definition> -> "
+			output << "\t<Opt Function Definition> -> "
 				<< "<Function Definition>\n";
 			cout << "\t<Opt Function Definition> -> "
 				<< "<Function Definition>\n";
 		}
-		FunctionDefinition(infile, outfile);
+		FunctionDefinition(input, output);
 	}
 	else
 	{
 		if (!flag)
 		{
-			outfile << "\t<Opt Function Definition> -> " << "Epsilon" << endl;
+			output << "\t<Opt Function Definition> -> " << "Epsilon" << endl;
 			cout << "\t<Opt Function Definition> -> " << "Epsilon" << endl;
 		}
-		Empty(infile, outfile);
+		Empty(input, output);
 	}
 }
 
@@ -1049,11 +1049,11 @@ void Par::Empty(ifstream& infile, ofstream& outfile)
 
 void Par::printError(ofstream& outfile)
 {
-	outfile << "Error at line " << lineNum << endl;
-	cerr << "Error at line " << lineNum << endl;
+	outfile << "Error at line " << line << endl;
+	cerr << "Error at line " << line<< endl;
 	//Reset the line number if there is an syntax error. The program will terminate
 	//right away. So it is necessary to reset this for the next run.
-	lineNum = 1;
+	line = 1;
 }
 
 //Destructor
