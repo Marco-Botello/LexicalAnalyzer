@@ -24,7 +24,7 @@ void Par::print(ofstream& outfile)
 }
 
 //syntax rule functions
-void Par::RAT17F(ifstream& infile, ofstream& outfile)
+void Par::RAT19F(ifstream& infile, ofstream& outfile)
 {
 	//Get the first token in file.txt
 	Lexer(infile);
