@@ -31,9 +31,9 @@ void Par::RAT19F(ifstream& infile, ofstream& outfile)
 	print(outfile);
 	if (!_switch)
 	{
-		cout << "\t<RAT17F> -> <Opt Function Definitions>"
+		cout << "\t<RAT19F> -> <Opt Function Definitions>"
 			<< " %% <Opt Declaration List> <Statement List>\n";
-		outfile << "\t<RAT17F> -> <Opt Function Definitions>"
+		outfile << "\t<RAT19F> -> <Opt Function Definitions>"
 			<< " %% <Opt Declaration List> <Statement List>\n";
 	}
 	OptFunctionDefinition(infile, outfile);
@@ -99,36 +99,11 @@ void Par::FunctionDefinition(ifstream& infile, ofstream& outfile)
 	if (!_switch)
 	{
 		outfile << "\t<Function Definition> ->"
-			<< " <Function> <Function Definition Prime>\n";
+			<< " <Function> \n";
 		cout << "\t<Function Definition> ->"
-			<< " <Function> <Function Definition Prime>\n";
+			<< " <Function> \n";
 	}
 	Function(infile, outfile);
-	FunctionDefinitionPrime(infile, outfile);
-}
-
-void Par::FunctionDefinitionPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "@")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Function Definition Prime> ->"
-				<< " <Function Definition>\n";
-			outfile << "\t<Function Definition Prime> ->"
-				<< " <Function Definition>\n";
-		}
-		FunctionDefinition(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Function Definition Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Function Definition Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
 }
 
 void Par::Function(ifstream& infile, ofstream& outfile)
@@ -243,38 +218,11 @@ void Par::ParameterList(ifstream& infile, ofstream& outfile)
 	if (!_switch)
 	{
 		cout << "\t<Parameter List> -> "
-			<< "<Parameter> <Parameter List Prime>\n";
+			<< "<Parameter>\n";
 		outfile << "\t<Parameter List> -> "
-			<< "<Parameter> <Parameter List Prime>\n";
+			<< "<Parameter>\n";
 	}
 	Parameter(infile, outfile);
-	ParameterListPrime(infile, outfile);
-}
-
-void Par::ParameterListPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == ",")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Parameter List Prime> -> "
-				<< ", <Parameter>\n";
-			outfile << "\t<Parameter List Prime> -> "
-				<< ", <Parameter>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		ParameterList(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Parameter List Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Parameter List Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
 }
 
 void Par::Parameter(ifstream& infile, ofstream& outfile)
@@ -437,16 +385,15 @@ void Par::DeclarationList(ifstream& infile, ofstream& outfile)
 	if (!_switch)
 	{
 		cout << "\t<Declaration List> -> "
-			<< "<Declaration> ; <Declaration List Prime>\n";
+			<< "<Declaration>\n";
 		outfile << "\t<Declaration List> -> "
-			<< "<Declaration> ; <Declaration List Prime>\n";
+			<< "<Declaration>\n";
 	}
 	Declaration(infile, outfile);
 	if (lexeme == ";")
 	{
 		Lexer(infile);
 		print(outfile);
-		DeclarationListPrime(infile, outfile);
 	}
 	else
 	{
@@ -459,30 +406,6 @@ void Par::DeclarationList(ifstream& infile, ofstream& outfile)
 			<< " at the end of declaration.\n";
 		system("Pause");
 		exit(1);
-	}
-}
-
-void Par::DeclarationListPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "integer" || lexeme == "boolean" || lexeme == "floating")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Declaration List Prime> -> "
-				<< "<Declaration List>\n";
-			outfile << "\t<Declaration List Prime> -> "
-				<< "<Declaration List>\n";
-		}
-		DeclarationList(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Declaration List Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Declaration List Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
 	}
 }
 
@@ -506,13 +429,12 @@ void Par::IDs(ifstream& infile, ofstream& outfile)
 		if (!_switch)
 		{
 			cout << "\t<IDs> -> "
-				<< "<identifier> <IDs Prime>\n";
+				<< "<identifier>\n";
 			outfile << "\t<IDs> -> "
-				<< "<identifier> <IDs Prime>\n";
+				<< "<identifier>\n";
 		}
 		Lexer(infile);
 		print(outfile);
-		IDsPrime(infile, outfile);
 	}
 	else
 	{
@@ -528,69 +450,16 @@ void Par::IDs(ifstream& infile, ofstream& outfile)
 	}
 }
 
-void Par::IDsPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == ",")
-	{
-		if (!_switch)
-		{
-			cout << "\t<IDsPrime> -> "
-				<< ", <IDs>\n";
-			outfile << "\t<IDsPrime> -> "
-				<< ", <IDs>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		IDs(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<IDs Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<IDs Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
-}
-
 void Par::StatementList(ifstream& infile, ofstream& outfile)
 {
 	if (!_switch)
 	{
 		cout << "\t<Statement List> -> "
-			<< "<Statement> <Statement List Prime>\n";
+			<< "<Statement>\n";
 		outfile << "\t<Statement List> -> "
-			<< "<Statement> <Statement List Prime>\n";
+			<< "<Statement>\n";
 	}
 	Statement(infile, outfile);
-	StatementListPrime(infile, outfile);
-}
-
-void Par::StatementListPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "{" || token == "identifier" || lexeme == "if" ||
-		lexeme == "return" || lexeme == "write" || lexeme == "write" ||
-		lexeme == "read" || lexeme == "while")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Statement List Prime> -> "
-				<< "<Statement List>\n";
-			outfile << "\t<Statement List Prime> -> "
-				<< "<Statement List>\n";
-		}
-		StatementList(infile, outfile);
-	}
-	else
-	{
-		if (!_switch && !(lexeme == "EOF"))
-		{
-			cout << "\t<Statement List Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Statement List Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
 }
 
 void Par::Statement(ifstream& infile, ofstream& outfile)
@@ -659,7 +528,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 			outfile << "\t<Statement> -> "
 				<< "<Read>\n";
 		}
-		Read(infile, outfile);
+		Read(infile, outfile); //Be careful of read here
 	}
 	else if (lexeme == "while")
 	{
@@ -677,7 +546,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 		printError(outfile);
 		outfile << "Statement syntax error\n";
 		outfile << "Invalid token or keyword or separator\n";
-		outfile << "<identifier>,'if', 'return', 'write', 'read','while' "
+		outfile << "<identifier>,'if', 'return', 'write', 'read','while' " 
 			<< "keyword or '{'is expected at the beginning of a statement.\n";
 		cerr << "Statement syntax error\n";
 		cerr << "Invalid token or keyword or separator\n";
@@ -804,9 +673,9 @@ void Par::If(ifstream& infile, ofstream& outfile)
 		if (!_switch)
 		{
 			cout << "\t<If> -> "
-				<< "if (<Condition>) <Statement> <If Prime>\n";
+				<< "if (<Condition>) <Statement>\n";
 			outfile << "\t<If> -> "
-				<< "if (<Condition>) <Statement> <If Prime>\n";
+				<< "if (<Condition>) <Statement>\n";
 		}
 		Lexer(infile);
 		print(outfile);
@@ -820,7 +689,6 @@ void Par::If(ifstream& infile, ofstream& outfile)
 				Lexer(infile);
 				print(outfile);
 				Statement(infile, outfile);
-				IfPrime(infile, outfile);
 			}
 			else
 			{
@@ -863,64 +731,6 @@ void Par::If(ifstream& infile, ofstream& outfile)
 	}
 }
 
-void Par::IfPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "fi")
-	{
-		if (!_switch)
-		{
-			cout << "\t<If Prime> -> "
-				<< "fi\n";
-			outfile << "\t<If Prime> -> "
-				<< "fi\n";
-		}
-		Lexer(infile);
-		print(outfile);
-	}
-	else if (lexeme == "else")
-	{
-		if (!_switch)
-		{
-			cout << "\t<If Prime> -> "
-				<< "else <Statement> fi\n";
-			outfile << "\t<If Prime> -> "
-				<< "else <Statement> fi\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		Statement(infile, outfile);
-		if (lexeme == "fi")
-		{
-			Lexer(infile);
-			print(outfile);
-		}
-		else
-		{
-			printError(outfile);
-			outfile << "If statement syntax error\n";
-			outfile << "Invalid keyword, 'fi' is expected"
-				<< " at the end of If statement.\n";
-			cerr << "If statement syntax error\n";
-			cerr << "Invalid keyword, 'fi' is expected"
-				<< " at the end of If statement.\n";
-			system("Pause");
-			exit(1);
-		}
-	}
-	else
-	{
-		printError(outfile);
-		outfile << "If statement syntax error\n";
-		outfile << "Invalid keyword, 'fi' is expected at the end of If Statement\n"
-			<< "Or 'else' is expected if there is an If-else statement.\n";
-		cerr << "If statement syntax error\n";
-		cerr << "Invalid keyword, 'fi' is expected at the end of If Statement\n"
-			<< "Or 'else' is expected if there is an If-else statement.\n";
-		system("Pause");
-		exit(1);
-	}
-}
-
 void Par::Return(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "return")
@@ -928,13 +738,12 @@ void Par::Return(ifstream& infile, ofstream& outfile)
 		if (!_switch)
 		{
 			cout << "\t<Return> -> "
-				<< "return <Return Prime>\n";
+				<< "return\n";
 			outfile << "\t<Return> -> "
-				<< "return <Return Prime>\n";
+				<< "return\n";
 		}
 		Lexer(infile);
 		print(outfile);
-		ReturnPrime(infile, outfile);
 	}
 	else
 	{
@@ -945,210 +754,6 @@ void Par::Return(ifstream& infile, ofstream& outfile)
 		cerr << "Return statement syntax error\n";
 		cerr << "Invalid keyword, 'return' is expected"
 			<< " at the beginning of Return statement.\n";
-		system("Pause");
-		exit(1);
-	}
-}
-
-void Par::ReturnPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == ";")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Return Prime> -> "
-				<< ";\n";
-			outfile << "\t<Return Prime> -> "
-				<< ";\n";
-		}
-		Lexer(infile);
-		print(outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Return Prime> -> "
-				<< "<Expression>;\n";
-			outfile << "\t<Return Prime> -> "
-				<< "<Expression>;\n";
-		}
-		Expression(infile, outfile);
-		if (lexeme == ";")
-		{
-			Lexer(infile);
-			print(outfile);
-		}
-		else
-		{
-			printError(outfile);
-			outfile << "Return statement syntax error\n";
-			outfile << "Invalid separator, ';' is expected"
-				<< " at the end of Return statement.\n";
-			cerr << "Return statement syntax error\n";
-			cerr << "Invalid separator, ';' is expected"
-				<< " at the end of Return statement.\n";	
-			system("Pause");
-			exit(1);
-		}
-	}
-}
-
-void Par::Write(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "write")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Write> -> "
-				<< "<write (<Expression>);\n";
-			outfile << "\t<Write> -> "
-				<< "<write (<Expression>);\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		if (lexeme == "(")
-		{
-			Lexer(infile);
-			print(outfile);
-			Expression(infile, outfile);
-			if (lexeme == ")")
-			{
-				Lexer(infile);
-				print(outfile);
-				if (lexeme == ";")
-				{
-					Lexer(infile);
-					print(outfile);
-				}
-				else
-				{
-					printError(outfile);
-					outfile << "Write statement syntax error\n";
-					outfile << "Invalid separator, ';' is expected"
-						<< " at the end of Write statement.\n";
-					cerr << "Write statement syntax error\n";
-					cerr << "Invalid separator, ';' is expected"
-						<< " at the end of Write statement.\n";	
-					system("Pause");
-					exit(1);
-				}
-			}
-			else
-			{
-				printError(outfile);
-				outfile << "Write statement syntax error\n";
-				outfile << "Invalid separator, ')' is expected"
-					<< " before ';' and after <Expression>.\n";
-				cerr << "Write statement syntax error\n";
-				cerr << "Invalid separator, ')' is expected"
-					<< " before ';' and after <Expression>.\n";
-				system("Pause");
-				exit(1);
-			}
-		}
-		else
-		{
-			printError(outfile);
-			outfile << "Write statement syntax error\n";
-			outfile << "Invalid separator, '(' is expected"
-				<< " after 'write' keyword and before <Expression>.\n";
-			cerr << "Write statement syntax error\n";
-			cerr << "Invalid separator, '(' is expected"
-				<< " after 'write' keyword and before <Expression>.\n";
-			system("Pause");
-			exit(1);
-		}
-	}
-	else
-	{
-		printError(outfile);
-		outfile << "Write statement syntax error\n";
-		outfile << "Invalid keyword, 'write' is expected"
-			<< " at the beginning of Write statement.\n";
-		cerr << "Write statement syntax error\n";
-		cerr << "Invalid keyword, 'write' is expected"
-			<< " at the beginning of Write statement.\n";
-		system("Pause");
-		exit(1);
-	}
-}
-
-void Par::Read(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "read")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Read> -> "
-				<< "read (<IDs>);\n";
-			outfile << "\t<Read> -> "
-				<< "read (<IDs>);\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		if (lexeme == "(")
-		{
-			Lexer(infile);
-			print(outfile);
-			IDs(infile, outfile);
-			if (lexeme == ")")
-			{
-				Lexer(infile);
-				print(outfile);
-				if (lexeme == ";")
-				{
-					Lexer(infile);
-					print(outfile);
-				}
-				else
-				{
-					printError(outfile);
-					outfile << "Read statement syntax error\n";
-					outfile << "Invalid separator, ';' is expected"
-						<< " at the end of Read statement.\n";
-					cerr << "Read statement syntax error\n";
-					cerr << "Invalid separator, ';' is expected"
-						<< " at the end of Read statement.\n";
-					system("Pause");
-					exit(1);
-				}
-			}
-			else
-			{
-				printError(outfile);
-				outfile << "Read statement syntax error\n";
-				outfile << "Invalid separator, ')' is expected"
-					<< " after <IDs> and before ';'.\n";
-				cerr << "Read statement syntax error\n";
-				cerr << "Invalid separator, ')' is expected"
-					<< " after <IDs> and before ';'.\n";
-				system("Pause");
-				exit(1);
-			}
-		}
-		else
-		{
-			printError(outfile);
-			outfile << "Read statement syntax error\n";
-			outfile << "Invalid separator, '(' is expected"
-				<< " after 'read' keyword and before <IDs>.\n";
-			cerr << "Read statement syntax error\n";
-			cerr << "Invalid separator, '(' is expected"
-				<< " after 'read' keyword and before <IDs>.\n";	
-			system("Pause");
-			exit(1);
-		}
-	}
-	else
-	{
-		printError(outfile);
-		outfile << "Read statement syntax error\n";
-		outfile << "Invalid keyword, 'read' is expected"
-			<< " at the beginning of Read statement.\n";
-		cerr << "Read statement syntax error\n";
-		cerr << "Invalid keyword, 'read' is expected"
-			<< " at the beginning of Read statement.\n";
 		system("Pause");
 		exit(1);
 	}
@@ -1314,100 +919,20 @@ void Par::Expression(ifstream& infile, ofstream& outfile)
 {
 	if (!_switch)
 	{
-		cout << "\t<Expression> -> <Term> <Expression Prime>\n";
-		outfile << "\t<Expression> -> <Term> <Expression Prime>\n";
+		cout << "\t<Expression> -> <Term>\n";
+		outfile << "\t<Expression> -> <Term>\n";
 	}
 	Term(infile, outfile);
-	ExpressionPrime(infile, outfile);
-}
-
-void Par::ExpressionPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "+")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Expression Prime> -> "
-				<< "+ <Term> <Expression Prime>\n";
-			outfile << "\t<Expression Prime> -> "
-				<< "+ <Term> <Expression Prime>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		Term(infile, outfile);
-		ExpressionPrime(infile, outfile);
-	}
-	else if (lexeme == "-")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Expression Prime> -> "
-				<< "- <Term> <Expression Prime>\n";
-			outfile << "\t<Expression Prime> -> "
-				<< "- <Term> <Expression Prime>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		Term(infile, outfile);
-		ExpressionPrime(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Expression Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Expression Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
 }
 
 void Par::Term(ifstream& infile, ofstream& outfile)
 {
 	if (!_switch)
 	{
-		cout << "\t<Term> -> <Factor> <Term Prime>\n";
-		outfile << "\t<Term> -> <Factor> <Term Prime>\n";
+		cout << "\t<Term> -> <Factor>\n";
+		outfile << "\t<Term> -> <Factor>\n";
 	}
 	Factor(infile, outfile);
-	TermPrime(infile, outfile);
-}
-
-void Par::TermPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "*")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Term Prime> -> * <Factor> <Term Prime>\n";
-			outfile << "\t<Term Prime> -> * <Factor> <Term Prime>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		Factor(infile, outfile);
-		TermPrime(infile, outfile);
-	}
-	else if (lexeme == "/")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Term Prime> -> / <Factor> <Term Prime>\n";
-			outfile << "\t<Term Prime> -> / <Factor> <Term Prime>\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		Factor(infile, outfile);
-		TermPrime(infile, outfile);
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Term Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Term Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
 }
 
 void Par::Factor(ifstream& infile, ofstream& outfile)
@@ -1440,12 +965,11 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	{
 		if (!_switch)
 		{
-			cout << "\t<Primary> -> <identifier> <Primary Prime>\n";
-			outfile << "\t<Primary> -> <identifier> <Primary Prime>\n";
+			cout << "\t<Primary> -> <identifier>\n";
+			outfile << "\t<Primary> -> <identifier>\n";
 		}
 		Lexer(infile);
 		print(outfile);
-		PrimaryPrime(infile, outfile);
 	}
 	else if (token == "integer")
 	{
@@ -1495,7 +1019,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	{
 		if (!_switch)
 		{
-			cout << "\t<Prime> -> true\n";
+			cout << "\t<Prime> -> true\n"; //not sure what to do here?
 			outfile << "\t<Prime> -> true\n";
 		}
 		Lexer(infile);
@@ -1529,60 +1053,12 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 }
 
-void Par::PrimaryPrime(ifstream& infile, ofstream& outfile)
-{
-	if (lexeme == "[")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Primary Prime> -> [<IDs>]\n";
-			outfile << "\t<Primary Prime> -> [<IDs>]\n";
-		}
-		Lexer(infile);
-		print(outfile);
-		IDs(infile, outfile);
-		if (lexeme == "]")
-		{
-			Lexer(infile);
-			print(outfile);
-		}
-		else
-		{
-			printError(outfile);
-			outfile << "Primary syntax error\n";
-			outfile << "Invalid separator, ']' is expected"
-				<< " after <IDs>.\n";
-			cerr << "Primary syntax error\n";
-			cerr << "Invalid separator, ']' is expected"
-				<< " after <IDs>.\n";
-			system("Pause");
-			exit(1);
-		}
-	}
-	else
-	{
-		if (!_switch)
-		{
-			cout << "\t<Primary Prime> -> " << "Epsilon" << endl;
-			outfile << "\t<Primary Prime> -> " << "Epsilon" << endl;
-		}
-		Empty(infile, outfile);
-	}
-}
-
 void Par::Empty(ifstream& infile, ofstream& outfile)
 {
 	//Do nothing in this function
 }
 
-void Par::printError(ofstream& outfile)
-{
-	outfile << "Error at line " << line << endl;
-	cerr << "Error at line " << line << endl;
-	//Reset the line number if there is an syntax error. The program will terminate
-	//right away. So it is necessary to reset this for the next run.
-	line = 1;
-}
+
 
 //Destructor
 //Par::~Par() {}
