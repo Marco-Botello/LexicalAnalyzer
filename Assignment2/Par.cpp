@@ -3,19 +3,19 @@
 //constructor
 Par::Par()
 {
-	_switch = false; //Used to turn on/off syntax rules
+	flag = false; //Used to turn on/off syntax rules
 }
 
 //Function to turn on/off syntax rules
 void Par::ParserOnOff(const bool number)
 {
-	_switch = number;
+	flag = number;
 }
 
 //Print token and lexeme
 void Par::print(ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		Lexical::print();
 		outfile << "Token: " << left << setw(20) << this->token
@@ -29,7 +29,7 @@ void Par::RAT19F(ifstream& infile, ofstream& outfile)
 	//Get the first token in file.txt
 	Lexer(infile);
 	print(outfile);
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<RAT19F> -> <Opt Function Definitions>"
 			<< " %% <Opt Declaration List> <Statement List>\n";
@@ -74,7 +74,7 @@ void Par::OptFunctionDefinition(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "@")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			outfile << "\t<Opt Function Definition> -> "
 				<< "<Function Definition>\n";
@@ -85,7 +85,7 @@ void Par::OptFunctionDefinition(ifstream& infile, ofstream& outfile)
 	}
 	else
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			outfile << "\t<Opt Function Definition> -> " << "Epsilon" << endl;
 			cout << "\t<Opt Function Definition> -> " << "Epsilon" << endl;
@@ -96,7 +96,7 @@ void Par::OptFunctionDefinition(ifstream& infile, ofstream& outfile)
 
 void Par::FunctionDefinition(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		outfile << "\t<Function Definition> ->"
 			<< " <Function> \n";
@@ -110,7 +110,7 @@ void Par::Function(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "@")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Function> ->"
 				<< " @ <Identifier> (<Opt Parameter List>)"
@@ -193,7 +193,7 @@ void Par::OptParameterList(ifstream& infile, ofstream& outfile)
 {
 	if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Opt Parameter List> -> "
 				<< "<Parameter List>\n";
@@ -204,7 +204,7 @@ void Par::OptParameterList(ifstream& infile, ofstream& outfile)
 	}
 	else
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Opt Parameter List> -> " << "Epsilon" << endl;
 			outfile << "\t<Opt Parameter List> -> " << "Epsilon" << endl;
@@ -215,7 +215,7 @@ void Par::OptParameterList(ifstream& infile, ofstream& outfile)
 
 void Par::ParameterList(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Parameter List> -> "
 			<< "<Parameter>\n";
@@ -229,7 +229,7 @@ void Par::Parameter(ifstream& infile, ofstream& outfile)
 {
 	if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Parameter> -> <IDs> : <Qualifier>\n";
 			outfile << "\t<Parameter> -> <IDs> : <Qualifier>\n";
@@ -270,7 +270,7 @@ void Par::Qualifier(ifstream& infile, ofstream& outfile)
 {
 	if (token == "keyword" && lexeme == "integer")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Qualifier> -> integer\n";
 			outfile << "\t<Qualifier> -> integer\n";
@@ -280,7 +280,7 @@ void Par::Qualifier(ifstream& infile, ofstream& outfile)
 	}
 	else if (token == "keyword" && lexeme == "boolean")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Qualifier> -> boolean\n";
 			outfile << "\t<Qualifier> -> boolean\n";
@@ -290,7 +290,7 @@ void Par::Qualifier(ifstream& infile, ofstream& outfile)
 	}
 	else if (token == "keyword" && lexeme == "floating")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Qualifier> -> floating\n";
 			outfile << "\t<Qualifier> -> floating\n";
@@ -318,7 +318,7 @@ void Par::Body(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "{")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Body> -> { <Statement List> }\n";
 			outfile << "\t<Body> -> { <Statement List> }\n";
@@ -362,7 +362,7 @@ void Par::OptDeclarationList(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "integer" || lexeme == "boolean" || lexeme == "floating")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Opt Declaration List> -> <Declaration List>\n";
 			outfile << "\t<Opt Declaration List> -> <Declaration List>\n";
@@ -371,7 +371,7 @@ void Par::OptDeclarationList(ifstream& infile, ofstream& outfile)
 	}
 	else
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Opt Declaration List> -> " << "Epsilon" << endl;
 			outfile << "\t<Opt Declaration List> -> " << "Epsilon" << endl;
@@ -382,7 +382,7 @@ void Par::OptDeclarationList(ifstream& infile, ofstream& outfile)
 
 void Par::DeclarationList(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Declaration List> -> "
 			<< "<Declaration>\n";
@@ -411,7 +411,7 @@ void Par::DeclarationList(ifstream& infile, ofstream& outfile)
 
 void Par::Declaration(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Declaration> -> "
 			<< "<Qualifier> <IDs>\n";
@@ -426,7 +426,7 @@ void Par::IDs(ifstream& infile, ofstream& outfile)
 {
 	if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<IDs> -> "
 				<< "<identifier>\n";
@@ -452,7 +452,7 @@ void Par::IDs(ifstream& infile, ofstream& outfile)
 
 void Par::StatementList(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Statement List> -> "
 			<< "<Statement>\n";
@@ -466,7 +466,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "{")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<Compound>\n";
@@ -477,7 +477,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 	}
 	else if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<Assign>\n";
@@ -488,7 +488,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "if")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<If>\n";
@@ -499,7 +499,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "return")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<Return>\n";
@@ -510,7 +510,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "scan")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<Scan>\n";
@@ -521,7 +521,7 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "while")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Statement> -> "
 				<< "<While>\n";
@@ -550,7 +550,7 @@ void Par::Compound(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "{")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Compound> -> "
 				<< "{ <StatementList> }\n";
@@ -596,7 +596,7 @@ void Par::Assign(ifstream& infile, ofstream& outfile)
 {
 	if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Assign> -> "
 				<< "<Identifier> := <Expression>;\n";
@@ -659,7 +659,7 @@ void Par::If(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "if")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<If> -> "
 				<< "if (<Condition>) <Statement>\n";
@@ -724,7 +724,7 @@ void Par::Return(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "return")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Return> -> "
 				<< "return\n";
@@ -752,7 +752,7 @@ void Par::While(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "while")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<While> -> "
 				<< "<while (<Condition>) <Statement>\n";
@@ -814,7 +814,7 @@ void Par::While(ifstream& infile, ofstream& outfile)
 
 void Par::Condition(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Condition> -> "
 			<< "<Expression> <Relop> <Expression>\n";
@@ -830,7 +830,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "=")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> =\n";
 			outfile << "\t<Relop> -> =\n";
@@ -840,7 +840,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "/=")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> /=\n";
 			outfile << "\t<Relop> -> /=\n";
@@ -850,7 +850,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == ">")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> >\n";
 			outfile << "\t<Relop> -> >\n";
@@ -860,7 +860,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "<")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> <\n";
 			outfile << "\t<Relop> -> <\n";
@@ -870,7 +870,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "=>")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> =>\n";
 			outfile << "\t<Relop> -> =>\n";
@@ -880,7 +880,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "<=")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Relop> -> <=\n";
 			outfile << "\t<Relop> -> <=\n";
@@ -906,7 +906,7 @@ void Par::Relop(ifstream& infile, ofstream& outfile)
 
 void Par::Expression(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Expression> -> <Term>\n";
 		outfile << "\t<Expression> -> <Term>\n";
@@ -916,7 +916,7 @@ void Par::Expression(ifstream& infile, ofstream& outfile)
 
 void Par::Term(ifstream& infile, ofstream& outfile)
 {
-	if (!_switch)
+	if (!flag)
 	{
 		cout << "\t<Term> -> <Factor>\n";
 		outfile << "\t<Term> -> <Factor>\n";
@@ -928,7 +928,7 @@ void Par::Factor(ifstream& infile, ofstream& outfile)
 {
 	if (lexeme == "-")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Factor> -> - <Primary>\n";
 			outfile << "\t<Factor> -> - <Primary>\n";
@@ -939,7 +939,7 @@ void Par::Factor(ifstream& infile, ofstream& outfile)
 	}
 	else
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Factor> -> <Primary>\n";
 			outfile << "\t<Factor> -> <Primary>\n";
@@ -952,7 +952,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 {
 	if (token == "identifier")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Primary> -> <identifier>\n";
 			outfile << "\t<Primary> -> <identifier>\n";
@@ -962,7 +962,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 	else if (token == "integer")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Primary> -> <integer>\n";
 			outfile << "\t<Primary> -> <integer>\n";
@@ -972,7 +972,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 	else if (token == "floating")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Primary> -> <floating>\n";
 			outfile << "\t<Primary> -> <floating>\n";
@@ -982,7 +982,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "(")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Primary> -> (<Expression>)\n";
 			outfile << "\t<Primary> -> (<Expression>)\n";
@@ -1006,7 +1006,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "true")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Prime> -> true\n"; //not sure what to do here?
 			outfile << "\t<Prime> -> true\n";
@@ -1016,7 +1016,7 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 	}
 	else if (lexeme == "false")
 	{
-		if (!_switch)
+		if (!flag)
 		{
 			cout << "\t<Prime> -> false\n";
 			outfile << "\t<Prime> -> false\n";
