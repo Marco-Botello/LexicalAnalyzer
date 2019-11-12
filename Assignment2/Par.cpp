@@ -508,27 +508,16 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 		}
 		Return(infile, outfile);
 	}
-	else if (lexeme == "write")
+	else if (lexeme == "scan")
 	{
 		if (!_switch)
 		{
 			cout << "\t<Statement> -> "
-				<< "<Write>\n";
+				<< "<Scan>\n";
 			outfile << "\t<Statement> -> "
-				<< "<Write>\n";
+				<< "<Scan>\n";
 		}
-		Write(infile, outfile);
-	}
-	else if (lexeme == "read")
-	{
-		if (!_switch)
-		{
-			cout << "\t<Statement> -> "
-				<< "<Read>\n";
-			outfile << "\t<Statement> -> "
-				<< "<Read>\n";
-		}
-		Read(infile, outfile); //Be careful of read here
+		scan(infile, outfile);
 	}
 	else if (lexeme == "while")
 	{
@@ -546,11 +535,11 @@ void Par::Statement(ifstream& infile, ofstream& outfile)
 		printError(outfile);
 		outfile << "Statement syntax error\n";
 		outfile << "Invalid token or keyword or separator\n";
-		outfile << "<identifier>,'if', 'return', 'write', 'read','while' " 
+		outfile << "<identifier>,'if', 'return', 'scan', 'while' " 
 			<< "keyword or '{'is expected at the beginning of a statement.\n";
 		cerr << "Statement syntax error\n";
 		cerr << "Invalid token or keyword or separator\n";
-		cerr << "<identifier>,'if', 'return', 'write', 'read','while' "
+		cerr << "<identifier>,'if', 'return', 'scan', 'while' "
 			<< "keyword or '{'is expected at the beginning of a statement.\n";
 		system("Pause");
 		exit(1);
