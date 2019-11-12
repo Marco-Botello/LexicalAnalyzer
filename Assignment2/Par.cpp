@@ -1,18 +1,15 @@
 #include "Par.h"
 #include "lexical.h"
-//constructor
 Par::Par()
 {
-	flag = false; //Used to turn on/off syntax rules
+	flag = false; 
 }
 
-//Function to turn on/off syntax rules
 void Par::ParserOnOff(const bool number)
 {
 	flag = number;
 }
 
-//Print token and lexeme
 void Par::print(ofstream& output)
 {
 	if (!flag)
@@ -23,10 +20,9 @@ void Par::print(ofstream& output)
 	}
 }
 
-//syntax rule functions
 void Par::RAT19F(ifstream& infile, ofstream& output)
 {
-	//Get the first token in file.txt
+	
 	Lexer(infile);
 	print(output);
 	if (!flag)
@@ -55,7 +51,6 @@ void Par::RAT19F(ifstream& infile, ofstream& output)
 			exit(1);
 		}
 
-		//reset the line number after finishing syntax checking for a file.txt
 		line = 1;
 	}
 	else
@@ -1044,17 +1039,15 @@ void Par::Primary(ifstream& infile, ofstream& outfile)
 
 void Par::Empty(ifstream& infile, ofstream& outfile)
 {
-	//Do nothing in this function
+
 }
 
 void Par::printError(ofstream& outfile)
 {
 	outfile << "Error at line " << line << endl;
 	cerr << "Error at line " << line<< endl;
-	//Reset the line number if there is an syntax error. The program will terminate
-	//right away. So it is necessary to reset this for the next run.
+
 	line = 1;
 }
 
-//Destructor
-//Par::~Par() {}
+
