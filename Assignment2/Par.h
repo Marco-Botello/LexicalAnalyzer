@@ -5,23 +5,21 @@
 
 class Par : public Lexical
 {
-	//This class is implemented based on a predictive recursive descent parser(RDP)
-	//It has a syntax rule that is required for syntax analysis
-	//Starting with RAT17F which is the main function for top-down parser. 
-	//Then, calling the next functions recursively to analyze the syntax structure.
+	//RAT19F is the main function for this top-down parser
+	//The functions following it are called recursively using (RDP)
 public:
 	//constructor
 	Par();
 
 	//syntax rule functions after removing left recursive and backtracking
 
-	//<Rat17F> -> <Opt Function Definitions> %%  <Opt Declaration List> <Statement List>
+	//<Rat19F> -> <Opt Function Definitions> %%  <Opt Declaration List> <Statement List>
 	void RAT19F(ifstream& infile, ofstream& outfile);
 
 	//<Opt Function Definitions> -> <Function Definitions> | <Empty>
 	void OptFunctionDefinition(ifstream& infile, ofstream& outfile);
 
-	//<Function Definitions> -> <Function> < Function Definitions Prime>
+	//<Function Definitions> -> <Function>
 	void FunctionDefinition(ifstream& infile, ofstream& outfile);
 
 	/*<Function> ->  @  <Identifier>  (<Opt Parameter List> )   
@@ -31,7 +29,7 @@ public:
 	//<Opt Parameter List> ->  <Parameter List>   |  <Empty>
 	void OptParameterList(ifstream& infile, ofstream& outfile);
 
-	//<Parameter List>  ->  <Parameter> <Parameter List Prime>
+	//<Parameter List>  ->  <Parameter>
 	void ParameterList(ifstream& infile, ofstream& outfile);
 
 	//<Parameter> ->  <IDs > : <Qualifier> 
@@ -46,19 +44,16 @@ public:
 	//<Opt Declaration List> -> <Declaration List>   | <Empty>
 	void OptDeclarationList(ifstream& infile, ofstream& outfile);
 
-	//<Declaration List>  -> <Declaration> ;  <Declaration List Prime>
+	//<Declaration List>  -> <Declaration> ;
 	void DeclarationList(ifstream& infile, ofstream& outfile);
 
 	//<Declaration> ->  <Qualifier > <IDs>
 	void Declaration(ifstream& infile, ofstream& outfile);
 
-	//<IDs> ->  <Identifier> <IDs Prime>
+	//<IDs> ->  <Identifier>
 	void IDs(ifstream& infile, ofstream& outfile);
 
-	//<IDs Prime> ->  , <IDs> | <Empty>
-	void IDsPrime(ifstream& infile, ofstream& outfile);
-
-	//<Statement List> ->  <Statement> <Statement List Prime>
+	//<Statement List> ->  <Statement>
 	void StatementList(ifstream& infile, ofstream& outfile);
 
 	/*<Statement> ->  <Compound> | <Assign> | <If> |  <Return> | 
@@ -71,10 +66,10 @@ public:
 	//<Assign> -> <Identifier> : = <Expression>;
 	void Assign(ifstream& infile, ofstream& outfile);
 
-	//<If> -> if  ( <Condition>  ) <Statement> <If Prime>
+	//<If> -> if  ( <Condition>  ) <Statement>
 	void If(ifstream& infile, ofstream& outfile);
 	
-	//<Return> ->  return <Return Prime>
+	//<Return> ->  return
 	void Return(ifstream& infile, ofstream& outfile);
 
 	//<While> -> while ( <Condition>  )  <Statement> 
@@ -86,16 +81,16 @@ public:
 	//<Relop> ->   = |  /=  |   >   | <   |  =>   | <=
 	void Relop(ifstream& infile, ofstream& outfile);
 
-	//<Expression>  -> <Term> <Expression Prime>
+	//<Expression>  -> <Term>
 	void Expression(ifstream& infile, ofstream& outfile);
 
-	//<Term>    ->  <Factor> <Term Prime>
+	//<Term>    ->  <Factor>
 	void Term(ifstream& infile, ofstream& outfile);
 
 	//<Factor> -> - <Primary>   | <Primary>
 	void Factor(ifstream& infile, ofstream& outfile);
 
-	/*<Primary> -> <Identifier> <Primary Prime> | <Integer> | ( <Expression> ) |
+	/*<Primary> -> <Identifier> | <Integer> | ( <Expression> ) |
 	<Real>  | true | false*/
 	void Primary(ifstream& infile, ofstream& outfile);
 
