@@ -22,7 +22,7 @@ int main(){
         }
     cout<<"This file's tokens and lexemes:"<<endl;
     output<<"This file's tokens and lexemes:"<<endl;
-    Parser p;
+    Par p;
     input.clear();
     //set position back
     input.seekg(0);
@@ -30,7 +30,7 @@ int main(){
     cin>>onOff;
 
     //Turns on syntax check
-    p.ParserOnff(switch);
+    p.ParserOnOff(onOff);
     p.RAT19F(input,output);
         input.close();
     output.close();
